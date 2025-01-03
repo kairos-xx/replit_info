@@ -142,7 +142,7 @@ def install_toml():
         for cmd in [[
                 "git", "clone",
                 "https://github.com/paulovcmedeiros/toml-formatter.git",
-                "toml-formatter"
+                ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
         ],
                     [
                         "python", "-m", "pip", "install", "--user", "poetry",
@@ -150,10 +150,9 @@ def install_toml():
                     ],
                     [
                         "python", "-m", "pip", "install", "--user", "-e",
-                        "toml-formatter"
+                        ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
                     ],
-              #      ["rm", "-rf", "toml-formatter"]
-                   ]:
+                    ["toml-formatter", "check", "--fix-inplace", ".* *.toml"]]:
             run(cmd)
 
 
