@@ -5,7 +5,9 @@ def encrypt_string(text: str, key: str = "SECRET") -> str:
     key_extended = key_extended[: len(text)]
 
     # XOR each character with corresponding key character
-    encrypted = "".join(chr(ord(c) ^ ord(k)) for c, k in zip(text, key_extended))
+    encrypted = "".join(
+        chr(ord(c) ^ ord(k)) for c, k in zip(text, key_extended)
+    )
     # Convert to hex for safe storage/transmission
     return encrypted.encode().hex()
 
@@ -20,4 +22,6 @@ def decrypt_string(encrypted_hex: str, key: str = "SECRET") -> str:
     key_extended = key_extended[: len(encrypted)]
 
     # XOR each character with corresponding key character
-    return "".join(chr(ord(c) ^ ord(k)) for c, k in zip(encrypted, key_extended))
+    return "".join(
+        chr(ord(c) ^ ord(k)) for c, k in zip(encrypted, key_extended)
+    )

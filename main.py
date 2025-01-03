@@ -1,4 +1,4 @@
-from src.simple_crypto import encrypt_string, decrypt_string
+from src.simple_crypto import decrypt_string, encrypt_string
 
 # Example usage
 text = "Hello, World!"
