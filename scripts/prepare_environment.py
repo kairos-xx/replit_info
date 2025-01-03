@@ -139,20 +139,25 @@ def setup_github_repo(
 
 def install_toml():
     with suppress(Exception):
-        for cmd in [[
+        for cmd in [
+            [
                 "git", "clone",
                 "https://github.com/paulovcmedeiros/toml-formatter.git",
                 ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
-        ],
-                    [
-                        "python", "-m", "pip", "install", "--user", "poetry",
-                        "--break-system-packages"
-                    ],
-                    [
-                        "python", "-m", "pip", "install", "--user", "-e",
-                        ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
-                    ],
-                    ["toml-formatter", "check", "--fix-inplace", ".replit", "*.toml"]]:
+            ],
+            [
+                "python", "-m", "pip", "install", "--user", "poetry",
+                "--break-system-packages"
+            ],
+            [
+                "python", "-m", "pip", "install", "--user", "-e",
+                ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
+            ],
+            [
+                "toml-formatter", "check", "--fix-inplace", ".replit",
+                "pyproject.toml"
+            ]
+        ]:
             run(cmd)
 
 
