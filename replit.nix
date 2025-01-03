@@ -2,8 +2,8 @@
 {pkgs}: {
   deps = [
   pkgs.libyaml
-pkgs.ruff
-pkgs.nano
-pkgs.python312Full
+  pkgs.ruff
+  pkgs.nano
+  pkgs.python312Full
   ];
 }

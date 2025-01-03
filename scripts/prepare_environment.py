@@ -1020,7 +1020,7 @@ def run_all() -> None:
             f.write(
                 dedent(templates["nix"]).replace(
                     "@@@",
-                    "\n".join(setup["nix_packages"]),
+                    "\n  ".join(setup["nix_packages"]),
                 ))
 
         Path(pypi_upload_path).parent.mkdir(parents=True, exist_ok=True)
