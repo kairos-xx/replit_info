@@ -9,7 +9,6 @@ from os import environ, getenv
 from os.path import abspath, exists
 from pathlib import Path
 from subprocess import CalledProcessError, run
-from sys import version
 from textwrap import dedent, indent
 from typing import List, Optional, Tuple
 
@@ -1059,19 +1058,20 @@ def run_all() -> None:
                     "@@requirements@@",
                     indent(",\n".join(f"'{v}'" for v in requirements),
                            "        "),
-                ).replace("@@name@@", name).replace(
-                    "@@version@@",
-                    version).replace("@@email@@", user_email).replace(
-                        "@@description@@", description).replace(
-                            "@@readme@@",
-                            readme_path).replace("@@url@@", homepage).replace(
-                                "@@classifiers@@",
-                                indent(
-                                    ",\n".join(
-                                        f"'{v}'" for v in
-                                        pyproject_dict_project_classifiers),
-                                    "        "),
-                            ))
+                ).replace("@@project_name@@",
+                          project_name).replace("@@name@@", name).replace(
+                              "@@version@@",
+                              version).replace("@@email@@", user_email).
+                replace("@@description@@", description).replace(
+                    "@@readme@@",
+                    readme_path).replace("@@url@@", homepage).replace(
+                        "@@classifiers@@",
+                        indent(
+                            ",\n".join(
+                                f"'{v}'"
+                                for v in pyproject_dict_project_classifiers),
+                            "        "),
+                    ))
 
         Path(pypi_upload_path).parent.mkdir(parents=True, exist_ok=True)
 
