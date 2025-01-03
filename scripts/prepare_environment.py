@@ -1096,7 +1096,7 @@ def run_all() -> None:
         open(f"{home}/{readme_path}", "a+").close()
 
     create()
-    install_toml()
+   # install_toml()
     setup_github_repo(
         github_token,
         project_name,
