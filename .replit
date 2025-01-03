@@ -3,11 +3,6 @@ entrypoint = "main.py"
 modules = [ "python-3.11:v30-20240222-aba8eb6",]
 hidden = [ ".pythonlibs",]
 
-[tools]
-shell = 1
-disableGuessImports = true
-disableInstallBeforeRun = true
-
 [nix]
 channel = "stable-23_11"
 
