@@ -131,8 +131,8 @@ def setup_github_repo(
             run(["git", "pull", "origin", "main", "--rebase"])
         with suppress(Exception):
             run(["git", "stash", "pop"])
-        # with suppress(Exception):
-        #    run(["git", "add", "origin", repo_url])
+        with suppress(Exception):
+           run(["git", "add", "origin", repo_url_cleaned])
         with suppress(Exception):
             run(["git", "add", "."])
         with suppress(Exception):
