@@ -1,12 +1,12 @@
 
-
 from setuptools import find_packages, setup
+
 setup(
     name="@@project_name@@",
     version="0.1.1",
     packages=find_packages(),
     install_requires=[
-                'pytest>=7.0.0',
+         'pytest>=7.0.0',
         'pytest',
         'replit==4.1.0',
         'black',
@@ -24,8 +24,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/kairos-xx/GitPyPi312",
     classifiers=[
-
-                'Development Status :: 1 - Planning',
+        'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
