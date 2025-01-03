@@ -1057,6 +1057,7 @@ def run_all() -> None:
         """Create and configure project files."""
         with open(f"{home}/{pyproject_path}", "w") as f:
             dump(pyproject_dict, f)
+        print(f'{home}/{paths["replit"]}')
         with open(f'{home}/{paths["replit"]}', "w") as f:
             dump(replit_dict, f)
         with open(f"{home}/{requirements_path}", "w") as f:
@@ -1120,7 +1121,7 @@ def run_all() -> None:
         open(f"{home}/{readme_path}", "a+").close()
 
     create()
-    # install_toml()
+    install_toml()
     setup_github_repo(
         github_token,
         project_name,
