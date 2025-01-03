@@ -1,4 +1,3 @@
-
 """
 PyPI package upload script.
 Handles building and uploading package to PyPI with proper
@@ -15,7 +14,7 @@ from textwrap import dedent
 from typing import Optional
 
 from replit import info
-from requests import get, post
+from requests import get
 
 
 def get_latest_version(project_name) -> str:
@@ -26,8 +25,9 @@ def get_latest_version(project_name) -> str:
              '0.0.0' if not found
     """
     try:
-        return get(f"https://pypi.org/pypi/{project_name}/json"
-        ).json()["info"]["version"]
+        return get(f"https://pypi.org/pypi/{project_name}/json").json()[
+            "info"
+        ]["version"]
     except Exception:
         return "0.0.0"
 
@@ -59,19 +59,24 @@ def update_version_in_files(
     with open(pyproject_path, "r") as f:
         content = f.read()
     with open(pyproject_path, "w") as f:
-        f.write(content.replace(
-            f'version = "{get_latest_version(project_name)}"',
-            f'version = "{new_version}"',
-        ))
+        f.write(
+            content.replace(
+                f'version = "{get_latest_version(project_name)}"',
+                f'version = "{new_version}"',
+            )
+        )
 
     # Update setup.py
     with open("setup.py", "r") as f:
         content = f.read()
     with open("setup.py", "w") as f:
-        f.write(content.replace(
-            f'version="{get_latest_version(project_name)}"',
-            f'version="{new_version}"',
-        ))
+        f.write(
+            content.replace(
+                f'version="{get_latest_version(project_name)}"',
+                f'version="{new_version}"',
+            )
+        )
+
 
 def check_token() -> str:
     """Verify PyPI token exists in environment.
@@ -85,9 +90,7 @@ def check_token() -> str:
     token = getenv("PYPI_TOKEN")
     if not token:
         print("Error: PYPI_TOKEN environment variable not set")
-        print(
-            "Please set it in the Secrets tab (Env Variables)"
-        )
+        print("Please set it in the Secrets tab (Env Variables)")
         exit(1)
     return token
 
@@ -164,10 +167,7 @@ def main() -> None:
     # Get current version and increment it
     current_version = get_latest_version(project_name)
     new_version = increment_version(current_version)
-    print(
-        f"Incrementing version from {current_version} to "
-        f"{new_version}"
-    )
+    print(f"Incrementing version from {current_version} to " f"{new_version}")
 
     # Update version in files
     update_version_in_files(
@@ -180,9 +180,7 @@ def main() -> None:
     create_pypirc(check_token())
 
     # Build and upload directly
-    build_and_upload(
-        f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}'
-    )
+    build_and_upload(f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}')
     print("Package built and uploaded successfully!")
 
 

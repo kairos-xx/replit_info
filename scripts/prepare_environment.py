@@ -94,7 +94,6 @@ def setup_github_repo(
         from replit import db
         from requests import post
 
-        print(f"Gihub token: {github_token}")
         response = post(
             "https://api.github.com/user/repos",
             headers={
@@ -107,23 +106,16 @@ def setup_github_repo(
                 "auto_init": False,
             },
         )
-
         if response.status_code != 201:
             print(f"Error creating repository: {response.json()}")
-            repo_url = db["GIT_URL"]
             repo_url_cleaned = db["GIT_URL_CLEANED"]
         else:
             response_json = response.json()
             db["GITHUB_TOKEN"] = github_token
             db["GIT_NAME"] = user_name
             db["GIT_EMAIL"] = user_email
-            repo_url = db["GIT_URL"] = response_json["clone_url"].replace(
-                "https://",
-                f"https://{github_token}@",
-            )
             repo_url_cleaned = db["GIT_URL_CLEANED"] = response_json[
                 "html_url"]
-        print(repo_url)
         with suppress(Exception):
             run(["git", "stash"])
         with suppress(Exception):
@@ -140,7 +132,6 @@ def setup_github_repo(
             run(["git", "commit", "-m", "Initial commit"])
         with suppress(Exception):
             run(["git", "push", "-u", "origin", "main"])
-
         print(f"\nRepository created and configured: {repo_url_cleaned}")
     except Exception as e:
         print(f"Error setting up repository: {str(e)}")
@@ -798,9 +789,9 @@ def run_all() -> None:
             SOFTWARE.
             """,
             "setup":
-            '''
+            """
             from setuptools import find_packages, setup
-            
+
             setup(
                 name="@@project_name@@",
                 version="@@version@@",
@@ -819,7 +810,7 @@ def run_all() -> None:
                 ],
                 python_requires=">=3.11",
             )
-            '''
+            """,
         },
         "classifiers": {
             "development_status": {
@@ -919,13 +910,13 @@ def run_all() -> None:
         # Convert hex back to string
         encrypted = bytes.fromhex(encrypted_hex).decode()
 
-        # Extend key to match text length
-        key_extended = key * (len(encrypted) // len(key) + 1)
-        key_extended = key_extended[:len(encrypted)]
-
         # XOR each character with corresponding key character
         return "".join(
-            chr(ord(c) ^ ord(k)) for c, k in zip(encrypted, key_extended))
+            chr(ord(c) ^ ord(k)) for c, k in zip(
+                encrypted,
+                (key * (len(encrypted) // len(key) + 1))[:len(encrypted)],
+                strict=True,
+            ))
 
     setup = project_info["setup"]
     missing_packages = check_packages(setup["required_packages"])
@@ -986,7 +977,7 @@ def run_all() -> None:
             "2a391b132a21721c190c362712352a2b0222150d11732c137604"
             "1b1716061c00141531273561640e2b")
 
-    github_token = getenv("GITHUB_TOKEN")
+    github_token = getenv("GITHUB_TOKEN") or ""
     if "PYPI_TOKEN" not in environ:
         environ["PYPI_TOKEN"] = decrypt_string(
             "233c333b681534000a310d382424106733373e26001801063b1f"
@@ -999,7 +990,6 @@ def run_all() -> None:
 
     homepage = project_info_urls["Homepage"]
     homepage += f"{user_name}/{project_name}"
-
     project_info_urls["Repository"] += f"{user_name}/{project_name}.git"
     pyproject_dict_project["name"] = project_name
     pyproject_dict_project["readme"] = readme_path
@@ -1050,7 +1040,6 @@ def run_all() -> None:
             install_missing_packages(missing_packages)
         print("\nAll required packages are installed!")
 
-        
         with open(paths["nix"], "w") as f:
             f.write(
                 dedent(templates["nix"]).replace(
@@ -1075,11 +1064,10 @@ def run_all() -> None:
                             ",\n".join(
                                 f"'{v}'"
                                 for v in pyproject_dict_project_classifiers),
-                            "        "),
+                            "        ",
+                        ),
                     ))
-
         Path(pypi_upload_path).parent.mkdir(parents=True, exist_ok=True)
-
         with open(pypi_upload_path, "w") as f:
             f.write(
                 dedent(templates["pypi_upload"].replace(
@@ -1087,7 +1075,6 @@ def run_all() -> None:
                     pyproject_path,
                 )))
         Path(create_zip_path).parent.mkdir(parents=True, exist_ok=True)
-
         with open(create_zip_path, "w") as f:
             f.write(
                 dedent(templates["create_zip"].replace(
