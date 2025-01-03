@@ -1,6 +1,2 @@
-scripts/prepare_environment.py:369:80: E501 Line too long (93 > 79)
-scripts/prepare_environment.py:397:80: E501 Line too long (101 > 79)
-scripts/prepare_environment.py:443:80: E501 Line too long (95 > 79)
-scripts/prepare_environment.py:447:80: E501 Line too long (84 > 79)
 setup.py:26:22: SIM115 Use context handler for opening files
-Found 5 errors.
+Found 1 error.
