@@ -1,0 +1,43 @@
+Requirement already satisfied: wheel in ./.pythonlibs/lib/python3.11/site-packages (0.45.1)
+Requirement already satisfied: twine in ./.pythonlibs/lib/python3.11/site-packages (6.0.1)
+Requirement already satisfied: build in ./.pythonlibs/lib/python3.11/site-packages (1.2.2.post1)
+Requirement already satisfied: pkginfo>=1.8.1 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (1.12.0)
+Requirement already satisfied: readme-renderer>=35.0 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (44.0)
+Requirement already satisfied: requests>=2.20 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (2.32.3)
+Requirement already satisfied: requests-toolbelt!=0.9.0,>=0.8.0 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (1.0.0)
+Requirement already satisfied: urllib3>=1.26.0 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (2.3.0)
+Requirement already satisfied: keyring>=15.1 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (25.6.0)
+Requirement already satisfied: rfc3986>=1.4.0 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (2.0.0)
+Requirement already satisfied: rich>=12.0.0 in ./.pythonlibs/lib/python3.11/site-packages (from twine) (13.9.4)
+Requirement already satisfied: packaging in ./.pythonlibs/lib/python3.11/site-packages (from twine) (24.2)
+Requirement already satisfied: pyproject_hooks in ./.pythonlibs/lib/python3.11/site-packages (from build) (1.2.0)
+Requirement already satisfied: SecretStorage>=3.2 in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (3.3.3)
+Requirement already satisfied: jeepney>=0.4.2 in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (0.8.0)
+Requirement already satisfied: importlib_metadata>=4.11.4 in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (8.5.0)
+Requirement already satisfied: jaraco.classes in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (3.4.0)
+Requirement already satisfied: jaraco.functools in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (4.1.0)
+Requirement already satisfied: jaraco.context in ./.pythonlibs/lib/python3.11/site-packages (from keyring>=15.1->twine) (6.0.1)
+Requirement already satisfied: nh3>=0.2.14 in ./.pythonlibs/lib/python3.11/site-packages (from readme-renderer>=35.0->twine) (0.2.20)
+Requirement already satisfied: docutils>=0.21.2 in ./.pythonlibs/lib/python3.11/site-packages (from readme-renderer>=35.0->twine) (0.21.2)
+Requirement already satisfied: Pygments>=2.5.1 in ./.pythonlibs/lib/python3.11/site-packages (from readme-renderer>=35.0->twine) (2.18.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./.pythonlibs/lib/python3.11/site-packages (from requests>=2.20->twine) (3.4.1)
+Requirement already satisfied: idna<4,>=2.5 in ./.pythonlibs/lib/python3.11/site-packages (from requests>=2.20->twine) (3.10)
+Requirement already satisfied: certifi>=2017.4.17 in ./.pythonlibs/lib/python3.11/site-packages (from requests>=2.20->twine) (2024.12.14)
+Requirement already satisfied: markdown-it-py>=2.2.0 in ./.pythonlibs/lib/python3.11/site-packages (from rich>=12.0.0->twine) (3.0.0)
+Requirement already satisfied: zipp>=3.20 in ./.pythonlibs/lib/python3.11/site-packages (from importlib_metadata>=4.11.4->keyring>=15.1->twine) (3.21.0)
+Requirement already satisfied: mdurl~=0.1 in ./.pythonlibs/lib/python3.11/site-packages (from markdown-it-py>=2.2.0->rich>=12.0.0->twine) (0.1.2)
+Requirement already satisfied: cryptography>=2.0 in ./.pythonlibs/lib/python3.11/site-packages (from SecretStorage>=3.2->keyring>=15.1->twine) (44.0.0)
+Requirement already satisfied: more-itertools in ./.pythonlibs/lib/python3.11/site-packages (from jaraco.classes->keyring>=15.1->twine) (10.5.0)
+Requirement already satisfied: backports.tarfile in ./.pythonlibs/lib/python3.11/site-packages (from jaraco.context->keyring>=15.1->twine) (1.2.0)
+Requirement already satisfied: cffi>=1.12 in ./.pythonlibs/lib/python3.11/site-packages (from cryptography>=2.0->SecretStorage>=3.2->keyring>=15.1->twine) (1.17.1)
+Requirement already satisfied: pycparser in ./.pythonlibs/lib/python3.11/site-packages (from cffi>=1.12->cryptography>=2.0->SecretStorage>=3.2->keyring>=15.1->twine) (2.22)
+2025-01-03 04:08:36
+1
+Incrementing version from 0.0.0 to 0.0.1
+2
+3
+KKKKK
+4
+Building and uploading /home/runner/workspace...
+Error during build/upload for /home/runner/workspace: Command '['python', 'setup.py', 'sdist', 'bdist_wheel']' returned non-zero exit status 2.
+Package built and uploaded successfully!

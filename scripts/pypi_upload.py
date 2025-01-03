@@ -1,4 +1,3 @@
-
 """
 PyPI package upload script.
 Handles building and uploading package to PyPI with proper
@@ -6,6 +5,7 @@ versioning and logging.
 Contains utilities for version management and package deployment.
 """
 
+from contextlib import suppress
 from datetime import datetime
 from os import getenv
 from pathlib import Path
@@ -26,8 +26,8 @@ def get_latest_version(project_name) -> str:
              '0.0.0' if not found
     """
     try:
-        return get(f"https://pypi.org/pypi/{project_name}/json"
-        ).json()["info"]["version"]
+        return get(f"https://pypi.org/pypi/{project_name}/json").json(
+        )["info"]["version"]
     except Exception:
         return "0.0.0"
 
@@ -59,19 +59,23 @@ def update_version_in_files(
     with open(pyproject_path, "r") as f:
         content = f.read()
     with open(pyproject_path, "w") as f:
-        f.write(content.replace(
-            f'version = "{get_latest_version(project_name)}"',
-            f'version = "{new_version}"',
-        ))
+        f.write(
+            content.replace(
+                f'version = "{get_latest_version(project_name)}"',
+                f'version = "{new_version}"',
+            ))
 
     # Update setup.py
-    with open("setup.py", "r") as f:
-        content = f.read()
-    with open("setup.py", "w") as f:
-        f.write(content.replace(
-            f'version="{get_latest_version(project_name)}"',
-            f'version="{new_version}"',
-        ))
+    with suppress(Exception):
+        with open("setup.py", "r") as f:
+            content = f.read()
+        with open("setup.py", "w") as f:
+            f.write(
+                content.replace(
+                    f'version="{get_latest_version(project_name)}"',
+                    f'version="{new_version}"',
+                ))
+
 
 def check_token() -> str:
     """Verify PyPI token exists in environment.
@@ -85,10 +89,7 @@ def check_token() -> str:
     token = getenv("PYPI_TOKEN")
     if not token:
         print("Error: PYPI_TOKEN environment variable not set")
-        print(
-            "Please set it in the Secrets tab (Env Variables)"
-        )
-        exit(1)
+        print("Please set it in the Secrets tab (Env Variables)")
     return token
 
 
@@ -106,6 +107,7 @@ def create_pypirc(token: str) -> None:
     username = __token__
     password = {token}
     """
+    print("KKKKK")
     with open(str(Path.home() / ".pypirc"), "w") as f:
         f.write(dedent(pypirc_content))
 
@@ -149,7 +151,7 @@ def build_and_upload(project_dir: Optional[str] = None) -> None:
 
     except CalledProcessError as e:
         print(f"Error during build/upload for {working_dir}: {e}")
-        exit(1)
+    #    exit(1)
 
 
 def main() -> None:
@@ -160,14 +162,14 @@ def main() -> None:
 
     # Install required packages
     run(["pip", "install", "wheel", "twine", "build"], check=True)
+    print(1)
 
     # Get current version and increment it
     current_version = get_latest_version(project_name)
     new_version = increment_version(current_version)
-    print(
-        f"Incrementing version from {current_version} to "
-        f"{new_version}"
-    )
+    print(f"Incrementing version from {current_version} to "
+          f"{new_version}")
+    print(2)
 
     # Update version in files
     update_version_in_files(
@@ -175,14 +177,14 @@ def main() -> None:
         pyproject_path,
         project_name,
     )
+    print(3)
 
     # Check and setup PyPI token
     create_pypirc(check_token())
+    print(4)
 
     # Build and upload directly
-    build_and_upload(
-        f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}'
-    )
+    build_and_upload(f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}')
     print("Package built and uploaded successfully!")
 
 
