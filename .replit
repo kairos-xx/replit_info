@@ -164,3 +164,5 @@ args = "ruff check . --line-length 79 | tee logs/ruff.log 2>&1"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "black . --check --line-length 79 | tee logs/black.log 2>&1"
+
+

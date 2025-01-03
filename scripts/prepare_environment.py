@@ -9,7 +9,7 @@ from os import environ, getenv
 from os.path import abspath, exists
 from pathlib import Path
 from subprocess import CalledProcessError, run
-from textwrap import dedent
+from textwrap import dedent, indent
 from typing import List, Optional, Tuple
 
 
@@ -797,6 +797,30 @@ def run_all() -> None:
             CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
             SOFTWARE.
             """,
+            "setup":
+            '''
+
+            from setuptools import find_packages, setup
+            setup(
+                name="@@project_name@@",
+                version="0.1.1",
+                packages=find_packages(),
+                install_requires=[
+                    @@requirements@@
+                ],
+                author="@@name@@s",
+                author_email="@@email@@",
+                description="@@description@@",
+                long_description=open('@@readme@@').read(),
+                long_description_content_type="text/markdown",
+                url="@@url@@",
+                classifiers=[
+                   
+                    @@classifiers@@
+                ],
+                python_requires=">=3.11",
+            )
+            '''
         },
         "classifiers": {
             "development_status": {
@@ -829,6 +853,7 @@ def run_all() -> None:
                 "logs_folder": "logs",
                 "entrypoint": "main.py",
                 "source_folder": "src",
+                "setup": "setup.py",
             },
             "classifiers": {
                 "development_status": 1,
@@ -918,6 +943,8 @@ def run_all() -> None:
     paths = setup["paths"]
     project_info_urls = setup["urls"]
     setup_classifiers = setup["classifiers"]
+    description = setup["description"]
+    requirements = setup["requirements"]
     user_name = user_config["user_name"]
     user_email = user_config["user_email"]
     name = user_config["name"]
@@ -931,6 +958,7 @@ def run_all() -> None:
     entrypoint_path = paths["entrypoint"]
     source_folder_path = paths["source_folder"]
     requirements_path = paths["requirements"]
+    readme_path = paths["readme"]
     templates = project_info["templates"]
     replit_dict = templates["replit"]
     pyproject_dict = templates["pyproject"]
@@ -969,15 +997,17 @@ def run_all() -> None:
             "141512072a111d371e757364680e0a77080373126a75351c2631"
             "65220d141d25181a363d2c1a3c720430081c0a230f1704")
 
-    project_info_urls["Homepage"] += f"{user_name}/{project_name}"
+    homepage = project_info_urls["Homepage"]
+    homepage += f"{user_name}/{project_name}"
+
     project_info_urls["Repository"] += f"{user_name}/{project_name}.git"
     pyproject_dict_project["name"] = project_name
-    pyproject_dict_project["readme"] = paths["readme"]
+    pyproject_dict_project["readme"] = readme_path
     pyproject_dict_project["license"]["file"] = license_path
     pyproject_dict_project["authors"][0]["name"] = name
     pyproject_dict_project["authors"][0]["email"] = user_email
     pyproject_dict_project["version"] = setup["version"]
-    pyproject_dict_project["description"] = setup["description"]
+    pyproject_dict_project["description"] = description
     pyproject_dict_project["urls"] = setup["urls"]
     pyproject_dict_project_classifiers.insert(
         0,
@@ -1013,7 +1043,7 @@ def run_all() -> None:
         with open(paths["replit"], "w") as f:
             dump(replit_dict, f)
         with open(requirements_path, "w") as f:
-            f.write("\n".join(setup["requirements"]))
+            f.write("\n".join(requirements))
 
         run(["pip", "install", "-r", requirements_path])
         with open(paths["nix"], "w") as f:
@@ -1022,6 +1052,23 @@ def run_all() -> None:
                     "@@@",
                     "\n  ".join(setup["nix_packages"]),
                 ))
+        with open(paths["setup"], "w") as f:
+            f.write(
+                dedent(templates["setup"]).replace(
+                    "@@requirements@@",
+                    indent(",\n".join(f"'{v}'" for v in requirements),
+                           "        "),
+                ).replace("@@name@@", name).replace("@@email@@", user_email).
+                replace("@@description@@", description).replace(
+                    "@@readme@@",
+                    readme_path).replace("@@url@@", homepage).replace(
+                        "@@classifiers@@",
+                        indent(
+                            ",\n".join(
+                                f"'{v}'"
+                                for v in pyproject_dict_project_classifiers),
+                            "        "),
+                    ))
 
         Path(pypi_upload_path).parent.mkdir(parents=True, exist_ok=True)
 
