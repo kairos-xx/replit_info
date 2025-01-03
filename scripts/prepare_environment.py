@@ -1068,7 +1068,11 @@ def run_all() -> None:
             install_missing_packages(missing_packages)
         print("\nAll required packages are installed!")
 
-        with open(f'{home}/{paths["nix"]}', "w") as f:
+        with open(f'{home}/{paths["nix"]}', "w") as f:    
+            print(dedent(templates["nix"]).replace(
+                     "@@nix_packages@@",
+                     "\n  ".join(setup["nix_packages"]),
+                 ))
             f.write(
                 dedent(templates["nix"]).replace(
                     "@@nix_packages@@",
@@ -1094,7 +1098,7 @@ def run_all() -> None:
                                 for v in pyproject_dict_project_classifiers),
                             "        ",
                         ),
-                    ))
+                    )) 
         Path(f"{home}/{pypi_upload_path}").parent.mkdir(parents=True,
                                                         exist_ok=True)
         with open(f"{home}/{pypi_upload_path}", "w") as f:
