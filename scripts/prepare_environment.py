@@ -151,7 +151,9 @@ def install_toml():
                     [
                         "python", "-m", "pip", "install", "--user", "-e",
                         "toml-formatter"
-                    ], ["rm", "-rf", "toml-formatter"]]:
+                    ],
+              #      ["rm", "-rf", "toml-formatter"]
+                   ]:
             run(cmd)
 
 
