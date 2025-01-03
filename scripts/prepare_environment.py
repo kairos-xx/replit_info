@@ -1127,7 +1127,8 @@ def run_all() -> None:
         user_name,
         user_email,
     )
-    Path(abspath(__file__)).rename(f"{home}/{current_script_path}")
+    with suppress(Exception):
+        Path(abspath(__file__)).rename(f"{home}/{current_script_path}")
 
 
 if __name__ == "__main__":
