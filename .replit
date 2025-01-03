@@ -79,7 +79,7 @@ mode = "sequential"
 author = 299513
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "black . --exclude '(\\..*|__.*__)' --line-length 79"
+args = "black . --exclude '/\\.[^/]+|/__[^/]+__$' --line-length 79"
 
 
 [[workflows.workflow]]
@@ -106,7 +106,7 @@ mode = "sequential"
 author = 299513
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pyright --warnings --project  <(echo '{\"exclude\": [\"**/.*\", \"**/__*__\"]}') | tee logs/pyright.log 2>&1"
+args = "pyright --warnings --project <(echo '{\"exclude\": [\"**/.*\", \"**/__*__\"]}') | tee logs/pyright.log 2>&1"
 
 
 [[workflows.workflow]]
@@ -133,7 +133,7 @@ mode = "sequential"
 author = 299513
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "black . --exclude '(\\..*|__.*__)' --check --line-length 79 | tee logs/ruff.log 2>&1"
+args = "black . --exclude '/\\.[^/]+|/__[^/]+__$' --check --line-length 79 | tee logs/black.log 2>&1"
 
 
 [[workflows.workflow]]
@@ -151,6 +151,6 @@ mode = "sequential"
 author = 299513
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pyright --warnings --project <(echo '{\"exclude\": [\"**/.*\", \"**/__*__\"]}') | tee logs/pyright.log 2>&1 && pflake8 --exclude '.*,__*__' | tee logs/flake8.log 2>&1 && ruff check . --exclude \"**/.*,**/__*__\" --line-length 79 | tee logs/ruff.log 2>&1 && black . --exclude '(\\..*|__.*__)' --check --line-length 79 | tee logs/black.log 2>&1"
+args = "pyright --warnings --project <(echo '{\"exclude\": [\"**/.*\", \"**/__*__\"]}') | tee logs/pyright.log 2>&1 && pflake8 --exclude '.*,__*__' | tee logs/flake8.log 2>&1 && ruff check . --exclude \"**/.*,**/__*__\" --line-length 79 | tee logs/ruff.log 2>&1 && black . --exclude '/\\.[^/]+|/__[^/]+__$' --check --line-length 79 | tee logs/black.log 2>&1"
 
 

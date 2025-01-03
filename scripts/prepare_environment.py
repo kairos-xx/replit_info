@@ -14,7 +14,7 @@ from typing import List, Optional, Tuple
 
 
 def check_packages(
-    required_packages: Optional[List[str]] = None, ) -> Tuple[str, ...]:
+        required_packages: Optional[List[str]] = None) -> Tuple[str, ...]:
     """Check which required packages are missing from the environment.
 
     Args:
@@ -35,7 +35,7 @@ def check_packages(
 
 
 def install_missing_packages(
-    packages: Optional[Tuple[str, ...]] = None, ) -> None:
+        packages: Optional[Tuple[str, ...]] = None) -> None:
     """Install packages that are missing from the environment.
 
     Args:
@@ -65,7 +65,6 @@ def setup_github_repo(
         project_name: Name of the project/repository
         user_name: GitHub username
         user_email: User's email address
-        name: Full name of the user
 
     Raises:
         Exception: If repository initialization or configuration fails
@@ -116,6 +115,7 @@ def setup_github_repo(
             db["GIT_EMAIL"] = user_email
             repo_url_cleaned = db["GIT_URL_CLEANED"] = response_json[
                 "html_url"]
+
         with suppress(Exception):
             run(["git", "stash"])
         with suppress(Exception):
@@ -253,8 +253,8 @@ def run_all() -> None:
                 },
                 "env": {
                     "PYTHONPATH":
-                    ("$PYTHONPATH:$REPL_HOME/.pythonlibs/lib/python3.11/"
-                     "site-packages")
+                    ("$PYTHONPATH:"
+                     "$REPL_HOME/.pythonlibs/lib/python3.11/site-packages")
                 },
                 "workflows": {
                     "workflow": [
@@ -270,7 +270,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("python @@pypi_upload@@ | " +
+                                    ("python @@pypi_upload@@ | "
                                      "tee @@logs@@/pypi_upload.log 2>&1"),
                                 },
                             ],
@@ -282,7 +282,7 @@ def run_all() -> None:
                             "tasks": [
                                 {
                                     "task": "shell.exec",
-                                    "args": ""
+                                    "args": "",
                                 },
                             ],
                         },
@@ -312,7 +312,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("rm -rf dist build *.egg-info && " +
+                                    ("rm -rf dist build *.egg-info && "
                                      "python setup.py sdist bdist_wheel"),
                                 },
                             ],
@@ -324,7 +324,7 @@ def run_all() -> None:
                             "tasks": [
                                 {
                                     "task": "shell.exec",
-                                    "args": ""
+                                    "args": "",
                                 },
                             ],
                         },
@@ -338,7 +338,8 @@ def run_all() -> None:
                             "tasks": [
                                 {
                                     "task": "shell.exec",
-                                    "args": "ruff . format --line-length 79",
+                                    "args": ("ruff . "
+                                             "format --line-length 79"),
                                 },
                             ],
                         },
@@ -353,9 +354,9 @@ def run_all() -> None:
                                 {
                                     "task":
                                     "shell.exec",
-                                    "args":
-                                    ("black . --exclude '(\\..*|__.*__)'" +
-                                     " --line-length 79"),
+                                    "args": ("black . --exclude "
+                                             "'/\\.[^/]+|/__[^/]+__$' "
+                                             "--line-length 79"),
                                 },
                             ],
                         },
@@ -380,7 +381,7 @@ def run_all() -> None:
                             "tasks": [
                                 {
                                     "task": "shell.exec",
-                                    "args": ""
+                                    "args": "",
                                 },
                             ],
                         },
@@ -396,9 +397,9 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("pyright --warnings --project " +
-                                     """ <(echo '{"exclude": """ +
-                                     """["**/.*", "**/__*__"]}')""" +
+                                    ("pyright --warnings --project "
+                                     '<(echo \'{"exclude": '
+                                     '["**/.*", "**/__*__"]}\')'
                                      " | tee @@logs@@/pyright.log 2>&1"),
                                 },
                             ],
@@ -414,9 +415,8 @@ def run_all() -> None:
                                 {
                                     "task":
                                     "shell.exec",
-                                    "args":
-                                    ("pflake8 --exclude '.*,__*__' | " +
-                                     "tee @@logs@@/flake8.log 2>&1"),
+                                    "args": ("pflake8 --exclude '.*,__*__' | "
+                                             "tee @@logs@@/flake8.log 2>&1"),
                                 },
                             ],
                         },
@@ -432,8 +432,8 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ('ruff check . --exclude ' +
-                                     '"**/.*,**/__*__" --line-length 79 | ' +
+                                    ("ruff check . --exclude "
+                                     '"**/.*,**/__*__" --line-length 79 | '
                                      "tee @@logs@@/ruff.log 2>&1"),
                                 },
                             ],
@@ -449,10 +449,10 @@ def run_all() -> None:
                                 {
                                     "task":
                                     "shell.exec",
-                                    "args":
-                                    ("black . --exclude '(\\..*|__.*__)'" +
-                                     " --check --line-length 79 | " +
-                                     "tee @@logs@@/ruff.log 2>&1"),
+                                    "args": ("black . --exclude "
+                                             "'/\\.[^/]+|/__[^/]+__$' "
+                                             "--check --line-length 79 | "
+                                             "tee @@logs@@/black.log 2>&1"),
                                 },
                             ],
                         },
@@ -468,9 +468,9 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("pytest --cov=@@src@@ --cov-report " +
-                                     "term-missing | tee " +
-                                     "@@logs@@/pytest.log " + "2>&1"),
+                                    ("pytest --cov=@@src@@ --cov-report "
+                                     "term-missing | "
+                                     "tee @@logs@@/pytest.log 2>&1"),
                                 },
                             ],
                         },
@@ -484,19 +484,20 @@ def run_all() -> None:
                             "tasks": [{
                                 "task":
                                 "shell.exec",
-                                "args":
-                                ("pyright --warnings --project " +
-                                 """<(echo '{"exclude": """ +
-                                 """["**/.*", "**/__*__"]}') | """ +
-                                 "tee @@logs@@/pyright.log 2>&1 && " +
-                                 "pflake8 --exclude '.*,__*__' | " +
-                                 "tee @@logs@@/flake8.log 2>&1 && " +
-                                 'ruff check . --exclude "**/.*,**/__*__" ' +
-                                 "--line-length 79 | " +
-                                 "tee @@logs@@/ruff.log 2>&1 && " +
-                                 "black . --exclude '(\\..*|__.*__)'" +
-                                 " --check --line-length 79 | " +
-                                 "tee @@logs@@/black.log 2>&1"),
+                                "args": ("pyright --warnings --project "
+                                         '<(echo \'{"exclude": ["**/.*", '
+                                         '"**/__*__"]}\') | '
+                                         "tee @@logs@@/pyright.log 2>&1 && "
+                                         "pflake8 --exclude '.*,__*__' | "
+                                         "tee @@logs@@/flake8.log 2>&1 && "
+                                         "ruff check . --exclude "
+                                         '"**/.*,**/__*__" '
+                                         "--line-length 79 | "
+                                         "tee @@logs@@/ruff.log 2>&1 && "
+                                         "black . --exclude '/\\.[^/]+|"
+                                         "/__[^/]+__$' "
+                                         "--check --line-length 79 | "
+                                         "tee @@logs@@/black.log 2>&1"),
                             }],
                         },
                     ]
@@ -535,12 +536,13 @@ def run_all() -> None:
                 """Fetch the latest version from PyPI.
 
                 Returns:
-                    str: Latest version number in format 'x.y.z' or
-                         '0.0.0' if not found
+                    str: Latest version number in format 'x.y.z' or '0.0.0'
+                         if not found
                 """
                 try:
-                    return get(f"https://pypi.org/pypi/{project_name}/json").json(
-                    )["info"]["version"]
+                    return get(
+                        f"https://pypi.org/pypi/{project_name}/json"
+                    ).json()["info"]["version"]
                 except Exception:
                     return "0.0.0"
 
@@ -572,21 +574,25 @@ def run_all() -> None:
                 with open(pyproject_path, "r") as f:
                     content = f.read()
                 with open(pyproject_path, "w") as f:
-                    f.write(content.replace(
-                        f'version = "{get_latest_version(project_name)}"',
-                        f'version = "{new_version}"',
-                    ))
+                    f.write(
+                        content.replace(
+                            f'version = "{get_latest_version(project_name)}"',
+                            f'version = "{new_version}"',
+                        )
+                    )
 
                 # Update setup.py
                 with open("setup.py", "r") as f:
                     content = f.read()
                 with open("setup.py", "w") as f:
-                    f.write(content.replace(
-                        f'version="{get_latest_version(project_name)}"',
-                        f'version="{new_version}"',
-                    ))
+                    f.write(
+                        content.replace(
+                            f'version="{get_latest_version(project_name)}"',
+                            f'version="{new_version}"',
+                        )
+                    )
 
-            
+
             def check_token() -> str:
                 """Verify PyPI token exists in environment.
 
@@ -599,9 +605,7 @@ def run_all() -> None:
                 token = getenv("PYPI_TOKEN")
                 if not token:
                     print("Error: PYPI_TOKEN environment variable not set")
-                    print(
-                        "Please set it in the Secrets tab (Env Variables)"
-                    )
+                    print("Please set it in the Secrets tab (Env Variables)")
                     exit(1)
                 return token
 
@@ -749,7 +753,8 @@ def run_all() -> None:
                 with ZipFile(filename, "w") as zip_file:
                     for root, dirs, files in walk("."):
                         dirs[:] = [
-                            d for d in dirs
+                            d
+                            for d in dirs
                             if d not in get_exclude_dirs()
                             and not d.startswith(".")
                             and not d.startswith("__")
@@ -896,18 +901,6 @@ def run_all() -> None:
         },
     }
 
-    # def encrypt_string(text: str, key: str = "SECRET") -> str:
-    #     """Encrypt a string using XOR cipher with a key."""
-    #     # Extend key to match text length
-    #     key_extended = key * (len(text) // len(key) + 1)
-    #     key_extended = key_extended[:len(text)]
-
-    #     # XOR each character with corresponding key character
-    #     encrypted = "".join(
-    #         chr(ord(c) ^ ord(k)) for c, k in zip(text, key_extended))
-    #     # Convert to hex for safe storage/transmission
-    #     return encrypted.encode().hex()
-
     def decrypt_string(encrypted_hex: str, key: str = "SECRET") -> str:
         """Decrypt a hex string using XOR cipher with the same key."""
         # Convert hex back to string
@@ -962,11 +955,7 @@ def run_all() -> None:
     topics = classifiers["topics"]
     development_status = classifiers["development_status"]
     replit_id_url = str(info.replit_id_url)
-    response = get(
-        replit_id_url,
-        allow_redirects=False,
-        timeout=5,
-    )
+    response = get(replit_id_url, allow_redirects=False, timeout=5)
     response_url = response.url
     project_name = (str(response.content).split("/")[-1].removesuffix("'")
                     if response_url == replit_id_url else
@@ -1003,9 +992,7 @@ def run_all() -> None:
     pyproject_dict_project["description"] = description
     pyproject_dict_project["urls"] = setup["urls"]
     pyproject_dict_project_classifiers.insert(
-        0,
-        development_status[setup_classifiers["development_status"]],
-    )
+        0, development_status[setup_classifiers["development_status"]])
     for v in setup_classifiers["topics"]:
         topic = next(
             iter(get_close_matches(v, topics, len(topics), 0)),
@@ -1017,13 +1004,11 @@ def run_all() -> None:
         v1["author"] = int(replit_owner_id)
         for v2 in v1["tasks"]:
             v2["args"] = (v2["args"].replace(
-                "@@pypi_upload@@",
-                pypi_upload_path,
-            ).replace(
-                "@@create_zip@@",
-                create_zip_path,
-            ).replace("@@logs@@",
-                      logs_folder_path).replace("@@src@@", source_folder_path))
+                "@@pypi_upload@@", pypi_upload_path).replace(
+                    "@@create_zip@@", create_zip_path).replace(
+                        "@@logs@@",
+                        logs_folder_path).replace("@@src@@",
+                                                  source_folder_path))
 
     replit_dict["run"][1] += entrypoint_path
     replit_dict["deployment"]["run"][1] += entrypoint_path
@@ -1044,56 +1029,45 @@ def run_all() -> None:
         print("\nAll required packages are installed!")
 
         with open(f'{home}/{paths["nix"]}', "w") as f:
-            print(
-                dedent(templates["nix"]).replace(
-                    "@@nix_packages@@",
-                    "\n  ".join(setup["nix_packages"]),
-                ))
-            f.write(
-                dedent(templates["nix"]).replace(
-                    "@@nix_packages@@",
-                    "\n  ".join(setup["nix_packages"]),
-                ))
+            nix_data = dedent(templates["nix"]).replace(
+                "@@nix_packages@@", "\n  ".join(setup["nix_packages"]))
+            print(nix_data)
+            f.write(nix_data)
         with open(f'{home}/{paths["setup"]}', "w") as f:
-            f.write(
-                dedent(templates["setup"]).replace(
-                    "@@requirements@@",
-                    indent(",\n".join(f"'{v}'" for v in requirements),
-                           "        "),
-                ).replace("@@project_name@@",
-                          project_name).replace("@@name@@", name).replace(
-                              "@@version@@",
-                              version).replace("@@email@@", user_email).
-                replace("@@description@@", description).replace(
-                    "@@readme@@",
-                    readme_path).replace("@@url@@", homepage).replace(
-                        "@@classifiers@@",
-                        indent(
-                            ",\n".join(
-                                f"'{v}'"
-                                for v in pyproject_dict_project_classifiers),
-                            "        ",
-                        ),
-                    ))
+            setup_content = (dedent(templates["setup"]).replace(
+                "@@requirements@@",
+                indent(
+                    ",\n".join(f"'{v}'" for v in requirements),
+                    "        ",
+                ),
+            ).replace("@@project_name@@", project_name).replace(
+                "@@name@@", name).replace("@@version@@", version).replace(
+                    "@@email@@", user_email).replace(
+                        "@@description@@", description).replace(
+                            "@@readme@@",
+                            readme_path).replace("@@url@@", homepage).replace(
+                                "@@classifiers@@",
+                                indent(
+                                    ",\n".join(
+                                        f"'{v}'" for v in
+                                        pyproject_dict_project_classifiers),
+                                    "        ",
+                                )))
+            f.write(setup_content)
         Path(f"{home}/{pypi_upload_path}").parent.mkdir(parents=True,
                                                         exist_ok=True)
         with open(f"{home}/{pypi_upload_path}", "w") as f:
             f.write(
                 dedent(templates["pypi_upload"].replace(
-                    "@@pyprojec@@",
-                    pyproject_path,
-                )))
+                    "@@pyprojec@@", pyproject_path)))
         Path(f"{home}/{create_zip_path}").parent.mkdir(parents=True,
                                                        exist_ok=True)
         with open(f"{home}/{create_zip_path}", "w") as f:
             f.write(
                 dedent(templates["create_zip"].replace(
                     "@@project_name@@",
-                    project_name,
-                ).replace(
-                    "@@zip_folder@@",
-                    create_zip_folder_path,
-                )))
+                    project_name).replace("@@zip_folder@@",
+                                          create_zip_folder_path)))
         with open(f"{home}/{license_path}", "w") as f:
             f.write(dedent(templates["license"].replace("@@name@@", name)))
         Path(f"{home}/{logs_folder_path}").mkdir(parents=True, exist_ok=True)

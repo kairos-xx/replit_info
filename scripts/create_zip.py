@@ -43,7 +43,8 @@ def create_zip() -> None:
     with ZipFile(filename, "w") as zip_file:
         for root, dirs, files in walk("."):
             dirs[:] = [
-                d for d in dirs
+                d
+                for d in dirs
                 if d not in get_exclude_dirs()
                 and not d.startswith(".")
                 and not d.startswith("__")

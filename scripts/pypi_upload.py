@@ -22,12 +22,13 @@ def get_latest_version(project_name) -> str:
     """Fetch the latest version from PyPI.
 
     Returns:
-        str: Latest version number in format 'x.y.z' or
-             '0.0.0' if not found
+        str: Latest version number in format 'x.y.z' or '0.0.0'
+             if not found
     """
     try:
-        return get(f"https://pypi.org/pypi/{project_name}/json").json(
-        )["info"]["version"]
+        return get(
+            f"https://pypi.org/pypi/{project_name}/json"
+        ).json()["info"]["version"]
     except Exception:
         return "0.0.0"
 
@@ -59,19 +60,23 @@ def update_version_in_files(
     with open(pyproject_path, "r") as f:
         content = f.read()
     with open(pyproject_path, "w") as f:
-        f.write(content.replace(
-            f'version = "{get_latest_version(project_name)}"',
-            f'version = "{new_version}"',
-        ))
+        f.write(
+            content.replace(
+                f'version = "{get_latest_version(project_name)}"',
+                f'version = "{new_version}"',
+            )
+        )
 
     # Update setup.py
     with open("setup.py", "r") as f:
         content = f.read()
     with open("setup.py", "w") as f:
-        f.write(content.replace(
-            f'version="{get_latest_version(project_name)}"',
-            f'version="{new_version}"',
-        ))
+        f.write(
+            content.replace(
+                f'version="{get_latest_version(project_name)}"',
+                f'version="{new_version}"',
+            )
+        )
 
 
 def check_token() -> str:
@@ -86,9 +91,7 @@ def check_token() -> str:
     token = getenv("PYPI_TOKEN")
     if not token:
         print("Error: PYPI_TOKEN environment variable not set")
-        print(
-            "Please set it in the Secrets tab (Env Variables)"
-        )
+        print("Please set it in the Secrets tab (Env Variables)")
         exit(1)
     return token
 
