@@ -1044,8 +1044,13 @@ def run_all() -> None:
             dump(replit_dict, f)
         with open(requirements_path, "w") as f:
             f.write("\n".join(requirements))
+        missing_packages = check_packages(requirements)
+        print(f"Installing missing packages... {','.join(missing_packages)}")
+        if missing_packages:
+            install_missing_packages(missing_packages)
+        print("\nAll required packages are installed!")
 
-        run(["pip", "install", "-r", requirements_path])
+        
         with open(paths["nix"], "w") as f:
             f.write(
                 dedent(templates["nix"]).replace(
