@@ -307,7 +307,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("python @@pypi_upload@@ | "
+                                    ("python @@pypi_upload@@ | " +
                                      "tee @@logs@@/pypi_upload.log 2>&1"),
                                 },
                             ],
@@ -349,7 +349,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("rm -rf dist build *.egg-info && "
+                                    ("rm -rf dist build *.egg-info && " +
                                      "python setup.py sdist bdist_wheel"),
                                 },
                             ],
@@ -429,7 +429,7 @@ def run_all() -> None:
                                 {
                                     "task":
                                     "shell.exec",
-                                    "args": ("pyright --warnings | "
+                                    "args": ("pyright --warnings | " +
                                              "tee @@logs@@/pyright.log 2>&1"),
                                 },
                             ],
@@ -446,7 +446,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("pflake8 --exclude */. --exclude __* | "
+                                    ("pflake8 --exclude */. --exclude __* | " +
                                      "tee @@logs@@/flake8.log 2>&1"),
                                 },
                             ],
@@ -462,8 +462,9 @@ def run_all() -> None:
                                 {
                                     "task":
                                     "shell.exec",
-                                    "args": ("ruff check . --line-length 79 | "
-                                             "tee @@logs@@/ruff.log 2>&1"),
+                                    "args":
+                                    ("ruff check . --line-length 79 | " +
+                                     "tee @@logs@@/ruff.log 2>&1"),
                                 },
                             ],
                         },
@@ -479,7 +480,7 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("black . --check --line-length 79 | "
+                                    ("black . --check --line-length 79 | " +
                                      "tee @@logs@@/ruff.log 2>&1"),
                                 },
                             ],
@@ -496,9 +497,9 @@ def run_all() -> None:
                                     "task":
                                     "shell.exec",
                                     "args":
-                                    ("pytest --cov=@@src@@ --cov-report "
+                                    ("pytest --cov=@@src@@ --cov-report " +
                                      "term-missing | tee @@logs@@/pytest.log "
-                                     "2>&1"),
+                                     + "2>&1"),
                                 },
                             ],
                         },
@@ -509,22 +510,19 @@ def run_all() -> None:
                             "sequential",
                             "author":
                             0,
-                            "tasks": [
-                                {
-                                    "task":
-                                    "shell.exec",
-                                    "args":
-                                    ("pyright --warnings | "
-                                     "tee @@logs@@/pyright.log 2>&1 &&"
-                                     "pflake8 --exclude */. --exclude __* | "
-                                     "tee @@logs@@/flake8.log 2>&1 && "
-                                     "ruff check . --line-length 79 | "
-                                     "tee @@logs@@/ruff.log 2>&1 &&"
-                                     "black . --check --line-length 79 | "
-                                     "tee @@logs@@/black.log 2>&1"),
-                                }
-                               
-                            ],
+                            "tasks": [{
+                                "task":
+                                "shell.exec",
+                                "args":
+                                ("pyright --warnings | "+
+                                 "tee @@logs@@/pyright.log 2>&1 && " +
+                                 "pflake8 --exclude */. --exclude __* | " +
+                                 "tee @@logs@@/flake8.log 2>&1 && " +
+                                 "ruff check . --line-length 79 | " +
+                                 "tee @@logs@@/ruff.log 2>&1 && " +
+                                 "black . --check --line-length 79 | " +
+                                 "tee @@logs@@/black.log 2>&1"),
+                            }],
                         },
                     ]
                 },
@@ -1057,7 +1055,7 @@ def run_all() -> None:
         """Create and configure project files."""
         with open(f"{home}/{pyproject_path}", "w") as f:
             dump(pyproject_dict, f)
-        print(9999999,f'{home}/{paths["replit"]}')
+        print(9999999, f'{home}/{paths["replit"]}')
         with open(f'{home}/{paths["replit"]}', "w") as f:
             print(replit_dict)
             dump(replit_dict, f)
@@ -1069,11 +1067,12 @@ def run_all() -> None:
             install_missing_packages(missing_packages)
         print("\nAll required packages are installed!")
 
-        with open(f'{home}/{paths["nix"]}', "w") as f:    
-            print(dedent(templates["nix"]).replace(
-                     "@@nix_packages@@",
-                     "\n  ".join(setup["nix_packages"]),
-                 ))
+        with open(f'{home}/{paths["nix"]}', "w") as f:
+            print(
+                dedent(templates["nix"]).replace(
+                    "@@nix_packages@@",
+                    "\n  ".join(setup["nix_packages"]),
+                ))
             f.write(
                 dedent(templates["nix"]).replace(
                     "@@nix_packages@@",
@@ -1099,7 +1098,7 @@ def run_all() -> None:
                                 for v in pyproject_dict_project_classifiers),
                             "        ",
                         ),
-                    )) 
+                    ))
         Path(f"{home}/{pypi_upload_path}").parent.mkdir(parents=True,
                                                         exist_ok=True)
         with open(f"{home}/{pypi_upload_path}", "w") as f:
