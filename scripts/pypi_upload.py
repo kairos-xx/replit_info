@@ -15,7 +15,7 @@ from textwrap import dedent
 from typing import Optional
 
 from replit import info
-from requests import get, post
+from requests import get
 
 
 def get_latest_version(project_name) -> str:
@@ -26,8 +26,7 @@ def get_latest_version(project_name) -> str:
              '0.0.0' if not found
     """
     try:
-        return get(f"https://pypi.org/pypi/{project_name}/json"
-        ).json()["info"]["version"]
+        return get(f"https://pypi.org/pypi/{project_name}/json").json()["info"]["version"]
     except Exception:
         return "0.0.0"
 
