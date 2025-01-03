@@ -8,3 +8,4 @@ requests
 toml
 pyyaml
 isort
+zipfile38==0.0.3

@@ -886,7 +886,7 @@ def run_all() -> None:
                 "toml",
                 "pyyaml",
                 "isort",
-                # "zipfile",
+                "zipfile38==0.0.3",
             ],
             "nix_packages": [
                 "pkgs.libyaml",

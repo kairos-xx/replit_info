@@ -15,7 +15,8 @@ setup(
         'requests',
         'toml',
         'pyyaml',
-        'isort'
+        'isort',
+        'zipfile38==0.0.3'
     ],
     author="Joao Lopess",
     author_email="joaoslopes@gmail.com",
