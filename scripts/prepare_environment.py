@@ -1059,6 +1059,7 @@ def run_all() -> None:
             dump(pyproject_dict, f)
         print(9999999,f'{home}/{paths["replit"]}')
         with open(f'{home}/{paths["replit"]}', "w") as f:
+            print(replit_dict)
             dump(replit_dict, f)
         with open(f"{home}/{requirements_path}", "w") as f:
             f.write("\n".join(requirements))
