@@ -1,6 +1,8 @@
+
 """Create a ZIP archive of the project.
 
 This script creates a timestamped ZIP archive of the project files,
+
 excluding specified directories and files.
 """
 
@@ -35,13 +37,13 @@ def create_zip() -> None:
 
     # Create ZIP with filtered contents
     filename = (
-        f"{zip_path}/{project_name}_" f'{datetime.now().strftime("%Y%m%d_%H%M%S")}.zip'
+        f"{zip_path}/{project_name}_"
+        f'{datetime.now().strftime("%Y%m%d_%H%M%S")}.zip'
     )
     with ZipFile(filename, "w") as zip_file:
         for root, dirs, files in walk("."):
             dirs[:] = [
-                d
-                for d in dirs
+                d for d in dirs
                 if d not in get_exclude_dirs()
                 and not d.startswith(".")
                 and not d.startswith("__")

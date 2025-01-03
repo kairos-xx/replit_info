@@ -183,7 +183,7 @@ def run_all() -> None:
     - Setting up GitHub repository
     - Configuring project files
     """
-    home = Path.home()
+    home = "."
     project_info = {
         "templates": {
             "pyproject": {
