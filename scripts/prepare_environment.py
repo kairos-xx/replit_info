@@ -152,7 +152,7 @@ def install_toml():
                         "python", "-m", "pip", "install", "--user", "-e",
                         ".pythonlibs/lib/python3.11/site-packages/toml-formatter"
                     ],
-                    ["toml-formatter", "check", "--fix-inplace", ".* *.toml"]]:
+                    ["toml-formatter", "check", "--fix-inplace", ".*", "*.toml"]]:
             run(cmd)
 
 
