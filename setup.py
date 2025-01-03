@@ -13,6 +13,7 @@ setup(
         'flake8',
         'build',
         'requests',
+        'pyright',
         'toml',
         'pyyaml',
         'isort',
