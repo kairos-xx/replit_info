@@ -1057,7 +1057,7 @@ def run_all() -> None:
         """Create and configure project files."""
         with open(f"{home}/{pyproject_path}", "w") as f:
             dump(pyproject_dict, f)
-        print(f'{home}/{paths["replit"]}')
+        print(9999999,f'{home}/{paths["replit"]}')
         with open(f'{home}/{paths["replit"]}', "w") as f:
             dump(replit_dict, f)
         with open(f"{home}/{requirements_path}", "w") as f:
