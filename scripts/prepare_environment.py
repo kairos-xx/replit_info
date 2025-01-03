@@ -137,43 +137,6 @@ def setup_github_repo(
         print(f"Error setting up repository: {str(e)}")
 
 
-def install_toml():
-    from sysconfig import get_path
-
-    with suppress(Exception):
-        for v in [
-            [
-                "git",
-                "clone",
-                "https://github.com/paulovcmedeiros/toml-formatter.git",
-                f"{get_path('purelib')}/toml-formatter",
-            ],
-            [
-                "python",
-                "-m",
-                "pip",
-                "install",
-                "--user",
-                "poetry",
-                "--break-system-packages",
-            ],
-            [
-                "python",
-                "-m",
-                "pip",
-                "install",
-                "--user",
-                "-e",
-                f"{get_path('purelib')}/toml-formatter",
-            ],
-            [
-                "toml-formatter", "check", "--fix-inplace", ".replit",
-                "pyproject.toml"
-            ],
-        ]:
-            run(v)
-
-
 def run_all() -> None:
     """Execute all environment setup tasks.
 
@@ -514,7 +477,7 @@ def run_all() -> None:
                                 "task":
                                 "shell.exec",
                                 "args":
-                                ("pyright --warnings | "+
+                                ("pyright --warnings | " +
                                  "tee @@logs@@/pyright.log 2>&1 && " +
                                  "pflake8 --exclude */. --exclude __* | " +
                                  "tee @@logs@@/flake8.log 2>&1 && " +
@@ -902,6 +865,7 @@ def run_all() -> None:
                 "toml",
                 "pyyaml",
                 "isort",
+                "pyproject-flake8",
                 "zipfile38==0.0.3",
             ],
             "nix_packages": [
@@ -1125,7 +1089,6 @@ def run_all() -> None:
         open(f"{home}/{readme_path}", "a+").close()
 
     create()
-   # install_toml()
     setup_github_repo(
         github_token,
         project_name,

@@ -16,6 +16,7 @@ setup(
         'toml',
         'pyyaml',
         'isort',
+        'pyproject-flake8',
         'zipfile38==0.0.3'
     ],
     author="Joao Lopess",
