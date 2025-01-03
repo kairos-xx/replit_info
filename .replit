@@ -1,156 +1,156 @@
+run = [ "python", "main.py",]
+entrypoint = "main.py"
+modules = [ "python-3.11:v30-20240222-aba8eb6",]
+hidden = [ ".pythonlibs",]
 disableGuessImports = true
 disableInstallBeforeRun = true
-entrypoint = "main.py"
-hidden = [".pythonlibs"]
-modules = ["python-3.11:v30-20240222-aba8eb6"]
-run = ["python", "main.py"]
-
-[deployment]
-  deploymentTarget = "cloudrun"
-  run = ["python3", "main.py"]
-
-[env]
-  PYTHONPATH = "$PYTHONPATH:$REPL_HOME/.pythonlibs/lib/python3.11/site-packages"
 
 [nix]
-  channel = "stable-23_11"
+channel = "stable-23_11"
 
 [unitTest]
-  language = "python3"
+language = "python3"
+
+[deployment]
+run = [ "python3", "main.py",]
+deploymentTarget = "cloudrun"
+
+[env]
+PYTHONPATH = "$PYTHONPATH:$REPL_HOME/.pythonlibs/lib/python3.11/site-packages"
 
 [workflows]
+[[workflows.workflow]]
+name = "[Package] pypi upload"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python scripts/pypi_upload.py | tee logs/pypi_upload.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Package] pypi upload"
+name = "————————————————"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "————————————————"
+name = "[Util] create zip"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python scripts/create_zip.py"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Util] create zip"
+name = "[Util] build"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "rm -rf dist build *.egg-info && python setup.py sdist bdist_wheel"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Util] build"
+name = "————————————————"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "————————————————"
+name = "[Format] ruff"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "ruff . format --line-length 79"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Format] ruff"
+name = "[Format] black"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "black . --line-length 79"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Format] black"
+name = "[Format] isort"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "isort . -l 79 -m 1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Format] isort"
+name = "————————————————"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "————————————————"
+name = "[Report] pyright"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pyright --warnings | tee logs/pyright.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] pyright"
+name = "[Report] flake8"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pflake8 --exclude */. --exclude __* | tee logs/flake8.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] flake8"
+name = "[Report] ruff"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "ruff check . --line-length 79 | tee logs/ruff.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] ruff"
+name = "[Report] black"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "black . --check --line-length 79 | tee logs/ruff.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] black"
+name = "[Report] pytest"
+mode = "sequential"
+author = 299513
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pytest --cov=src --cov-report term-missing | tee logs/pytest.log 2>&1"
+
 
 [[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] pytest"
-
-[[workflows.workflow]]
-  author = 299513
-  mode = "sequential"
-  name = "[Report] All"
-
+name = "[Report] All"
+mode = "sequential"
+author = 299513
 [[workflows.workflow.tasks]]
-  args = "python scripts/pypi_upload.py | tee logs/pypi_upload.log 2>&1"
-  task = "shell.exec"
+task = "shell.exec"
+args = "pyright --warnings | tee logs/pyright.log 2>&1 && pflake8 --exclude */. --exclude __* | tee logs/flake8.log 2>&1 && ruff check . --line-length 79 | tee logs/ruff.log 2>&1 && black . --check --line-length 79 | tee logs/black.log 2>&1"
 
-[[workflows.workflow.tasks]]
-  args = ""
-  task = "shell.exec"
 
-[[workflows.workflow.tasks]]
-  args = "python scripts/create_zip.py"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "rm -rf dist build *.egg-info && python setup.py sdist bdist_wheel"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = ""
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "ruff . format --line-length 79"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "black . --line-length 79"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "isort . -l 79 -m 1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = ""
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "pyright --warnings | tee logs/pyright.log 2>&1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "pflake8 --exclude */. --exclude __* | tee logs/flake8.log 2>&1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "ruff check . --line-length 79 | tee logs/ruff.log 2>&1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "black . --check --line-length 79 | tee logs/ruff.log 2>&1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "pytest --cov=src --cov-report term-missing | tee logs/pytest.log 2>&1"
-  task = "shell.exec"
-
-[[workflows.workflow.tasks]]
-  args = "pyright --warnings | tee logs/pyright.log 2>&1 && pflake8 --exclude */. --exclude __* | tee logs/flake8.log 2>&1 && ruff check . --line-length 79 | tee logs/ruff.log 2>&1 && black . --check --line-length 79 | tee logs/black.log 2>&1"
-  task = "shell.exec"
