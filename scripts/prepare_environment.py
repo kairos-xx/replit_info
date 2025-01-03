@@ -46,7 +46,7 @@ def install_missing_packages(
     """
     for package in packages or []:
         try:
-            run(["pip", "install", package], check=True)
+            run(["pip", "install", package])
             print(f"Successfully installed {package}")
         except CalledProcessError as e:
             print(f"Failed to install {package}: {e}")
