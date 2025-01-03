@@ -6,7 +6,7 @@ setup(
     version="0.1.1",
     packages=find_packages(),
     install_requires=[
-         'pytest>=7.0.0',
+        'pytest>=7.0.0',
         'pytest',
         'replit==4.1.0',
         'black',

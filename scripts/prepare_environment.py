@@ -9,6 +9,7 @@ from os import environ, getenv
 from os.path import abspath, exists
 from pathlib import Path
 from subprocess import CalledProcessError, run
+from sys import version
 from textwrap import dedent, indent
 from typing import List, Optional, Tuple
 
@@ -803,10 +804,10 @@ def run_all() -> None:
             
             setup(
                 name="@@project_name@@",
-                version="0.1.1",
+                version="@@version@@",
                 packages=find_packages(),
                 install_requires=[
-             @@requirements@@
+            @@requirements@@
                 ],
                 author="@@name@@s",
                 author_email="@@email@@",
@@ -944,6 +945,7 @@ def run_all() -> None:
     setup_classifiers = setup["classifiers"]
     description = setup["description"]
     requirements = setup["requirements"]
+    version = setup["version"]
     user_name = user_config["user_name"]
     user_email = user_config["user_email"]
     name = user_config["name"]
@@ -1005,7 +1007,7 @@ def run_all() -> None:
     pyproject_dict_project["license"]["file"] = license_path
     pyproject_dict_project["authors"][0]["name"] = name
     pyproject_dict_project["authors"][0]["email"] = user_email
-    pyproject_dict_project["version"] = setup["version"]
+    pyproject_dict_project["version"] = version
     pyproject_dict_project["description"] = description
     pyproject_dict_project["urls"] = setup["urls"]
     pyproject_dict_project_classifiers.insert(
@@ -1057,17 +1059,19 @@ def run_all() -> None:
                     "@@requirements@@",
                     indent(",\n".join(f"'{v}'" for v in requirements),
                            "        "),
-                ).replace("@@name@@", name).replace("@@email@@", user_email).
-                replace("@@description@@", description).replace(
-                    "@@readme@@",
-                    readme_path).replace("@@url@@", homepage).replace(
-                        "@@classifiers@@",
-                        indent(
-                            ",\n".join(
-                                f"'{v}'"
-                                for v in pyproject_dict_project_classifiers),
-                            "        "),
-                    ))
+                ).replace("@@name@@", name).replace(
+                    "@@version@@",
+                    version).replace("@@email@@", user_email).replace(
+                        "@@description@@", description).replace(
+                            "@@readme@@",
+                            readme_path).replace("@@url@@", homepage).replace(
+                                "@@classifiers@@",
+                                indent(
+                                    ",\n".join(
+                                        f"'{v}'" for v in
+                                        pyproject_dict_project_classifiers),
+                                    "        "),
+                            ))
 
         Path(pypi_upload_path).parent.mkdir(parents=True, exist_ok=True)
 
