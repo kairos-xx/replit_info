@@ -21,9 +21,9 @@ def install_poetry():
         sys.exit(1)
 
 def install_package(clone_dir):
-    """Install the package using Poetry."""
+    """Install the package using pip instead of Poetry."""
     try:
-        run(['poetry', 'install', '--only main'], cwd=clone_dir)
+        run([sys.executable, '-m', 'pip', 'install', '--user', '-e', clone_dir], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error installing the package: {e}")
         sys.exit(1)
@@ -74,7 +74,7 @@ def main():
     else:
         bin_dir = os.path.join(clone_dir, 'bin')
 
-    add_to_path(bin_dir)
+    os.environ['PATH'] = f"{bin_dir}:{os.environ.get('PATH', '')}"
     print("Installation completed successfully.")
 
 if __name__ == "__main__":
