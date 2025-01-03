@@ -15,7 +15,7 @@ def clone_repository(repo_url, clone_dir):
 def install_poetry():
     """Install Poetry using pip."""
     try:
-        run([sys.executable, '-m', 'pip', 'install', '--user', 'poetry'])
+        run([sys.executable, '-m', 'pip', 'install', '--user', 'poetry', '--break-system-packages'])
     except subprocess.CalledProcessError as e:
         print(f"Error installing Poetry: {e}")
         sys.exit(1)
@@ -30,6 +30,8 @@ def install_package(clone_dir):
 
 def add_to_path(directory):
     """Add the specified directory to the system PATH."""
+    os.environ['PATH'] = f"{directory}:{os.environ.get('PATH', '')}"
+    print(f"Added {directory} to PATH temporarily")
     if platform.system() == 'Windows':
         # Windows-specific method to add to PATH
         import winreg as reg
