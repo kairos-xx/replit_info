@@ -1,3 +1,5 @@
+
+"""
 """
 PyPI package upload script.
 Handles building and uploading package to PyPI with proper
@@ -158,9 +160,8 @@ def build_and_upload(project_dir: Optional[str] = None) -> None:
 def main() -> None:
     """Main execution function for PyPI package upload."""
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    response = get(
-        "https://replit-info.replit.app/get?title&replit_id=" + (info.id or "")
-    )
+    response = get("https://replit-info.replit.app/get?title&replit_id=" +
+                   (info.id or ""))
     project_name = response.text.replace('"', "").strip()
     pyproject_path = "pyproject.toml"
 
@@ -170,10 +171,13 @@ def main() -> None:
     # Get current version and increment it
     current_version = get_latest_version(project_name)
     new_version = increment_version(current_version)
-    print(f"Incrementing version from {current_version} to " f"{new_version}")
+    print(
+        f"Incrementing version from {current_version} to "
+        f"{new_version}"
+    )
 
     update_version_in_files(
-        # Update version in files
+    # Update version in files
         new_version,
         pyproject_path,
         project_name,
@@ -183,7 +187,9 @@ def main() -> None:
     create_pypirc(check_token())
 
     # Build and upload directly
-    build_and_upload(f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}')
+    build_and_upload(
+        f'{Path.home()}/{(info.replit_url or "").split("/")[-1]}'
+    )
     print("Package built and uploaded successfully!")
 
 
