@@ -1,6 +1,5 @@
 
 """
-"""
 PyPI package upload script.
 Handles building and uploading package to PyPI with proper
 versioning and logging.
@@ -19,7 +18,7 @@ from replit import info
 from requests import get
 
 
-def get_latest_version(project_name) -> str:
+def get_latest_version(name) -> str:
     """Fetch the latest version from PyPI.
 
     Returns:
@@ -27,7 +26,7 @@ def get_latest_version(project_name) -> str:
              if not found
     """
     try:
-        return get(f"https://pypi.org/pypi/{project_name}/json").json()[
+        return get(f"https://pypi.org/pypi/{name}/json").json()[
             "info"
         ]["version"]
     except Exception:

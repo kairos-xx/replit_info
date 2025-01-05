@@ -481,8 +481,8 @@ def run_all() -> None:
               ];
             }
             """,
-            "pypi_upload": '''
-            """
+            "pypi_upload": 
+            '''
             """
             PyPI package upload script.
             Handles building and uploading package to PyPI with proper
@@ -502,7 +502,7 @@ def run_all() -> None:
             from requests import get
 
 
-            def get_latest_version(project_name) -> str:
+            def get_latest_version(name) -> str:
                 """Fetch the latest version from PyPI.
 
                 Returns:
@@ -510,7 +510,7 @@ def run_all() -> None:
                          if not found
                 """
                 try:
-                    return get(f"https://pypi.org/pypi/{project_name}/json").json()[
+                    return get(f"https://pypi.org/pypi/{name}/json").json()[
                         "info"
                     ]["version"]
                 except Exception:
@@ -764,7 +764,8 @@ def run_all() -> None:
             CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
             SOFTWARE.
             """,
-            "setup": """
+            "setup": 
+            """
             from pathlib import Path
 
             from setuptools import find_packages, setup
@@ -779,7 +780,7 @@ def run_all() -> None:
                 author="@@name@@s",
                 author_email="@@email@@",
                 description="@@description@@",
-                long_description=open('@@readme@@').read(),
+                long_description=Path('@@readme@@').read_text(),
                 long_description_content_type="text/markdown",
                 url="@@url@@",
                 classifiers=[
