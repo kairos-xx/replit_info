@@ -481,7 +481,7 @@ def run_all() -> None:
               ];
             }
             """,
-            "pypi_upload": 
+            "pypi_upload":
             '''
             """
             PyPI package upload script.
@@ -643,8 +643,9 @@ def run_all() -> None:
             def main() -> None:
                 """Main execution function for PyPI package upload."""
                 print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                response = get("@@replit_id_url@@" +
-                               (info.id or ""))
+                response = get(
+                    "https://replit-info.replit.app/get?title&replit_id=" + (info.id or "")
+                )
                 project_name = response.text.replace('"', "").strip()
                 pyproject_path = "@@pyproject@@"
 
@@ -660,7 +661,7 @@ def run_all() -> None:
                 )
 
                 update_version_in_files(
-                # Update version in files
+                    # Update version in files
                     new_version,
                     pyproject_path,
                     project_name,
@@ -764,7 +765,7 @@ def run_all() -> None:
             CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
             SOFTWARE.
             """,
-            "setup": 
+            "setup":
             """
             from pathlib import Path
 
