@@ -953,6 +953,7 @@ def run_all() -> None:
 
     homepage = project_info_urls["Homepage"]
     homepage += f"{user_name}/{project_name}"
+    project_info_urls["Homepage"] += f"{user_name}/{project_name}.git"
     project_info_urls["Repository"] += f"{user_name}/{project_name}.git"
     pyproject_dict_project["name"] = project_name
     pyproject_dict_project["readme"] = readme_path

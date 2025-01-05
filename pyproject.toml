@@ -17,7 +17,7 @@ email = "joaoslopes@gmail.com"
 file = "LICENSE"
 
 [project.urls]
-Homepage = "https://github.com/"
+Homepage = "https://github.com/kairos-xx/GitPyPi_3.12.git"
 Repository = "https://github.com/kairos-xx/GitPyPi_3.12.git"
 
 [tool.flake8]
