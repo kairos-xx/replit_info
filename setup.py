@@ -23,7 +23,7 @@ setup(
     author="Joao Lopess",
     author_email="joaoslopes@gmail.com",
     description="",
-    long_description=open('README.md').read() if not Path('README.md').exists() else Path('README.md').read_text(),
+    long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     url="https://github.com/kairos-xx/GitPyPi_3.12",
     classifiers=[
