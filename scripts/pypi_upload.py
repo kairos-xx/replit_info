@@ -159,8 +159,9 @@ def build_and_upload(project_dir: Optional[str] = None) -> None:
 def main() -> None:
     """Main execution function for PyPI package upload."""
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    _i = info.id or ""
     response = get(
-        "https://replit-info.replit.app/get?title&replit_id=" + (info.id or "")
+        "https://replit-info.replit.app/get?title&replit_id=" + _i
     )
     project_name = response.text.replace('"', "").strip()
     pyproject_path = "pyproject.toml"
