@@ -483,6 +483,7 @@ def run_all() -> None:
             """,
             "pypi_upload": '''
             """
+            """
             PyPI package upload script.
             Handles building and uploading package to PyPI with proper
             versioning and logging.
@@ -509,9 +510,9 @@ def run_all() -> None:
                          if not found
                 """
                 try:
-                    return get(
-                        f"https://pypi.org/pypi/{project_name}/json"
-                    ).json()["info"]["version"]
+                    return get(f"https://pypi.org/pypi/{project_name}/json").json()[
+                        "info"
+                    ]["version"]
                 except Exception:
                     return "0.0.0"
 
