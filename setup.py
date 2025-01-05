@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="GitPyPi312",
+    name="GitPyPi_3.12",
     version="0.1.1",
     packages=find_packages(),
     install_requires=[
@@ -25,7 +25,7 @@ setup(
     description="",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/kairos-xx/GitPyPi312",
+    url="https://github.com/kairos-xx/GitPyPi_3.12",
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',

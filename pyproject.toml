@@ -3,7 +3,7 @@ requires = [ "setuptools>=45", "wheel",]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "GitPyPi312"
+name = "GitPyPi_3.12"
 version = "0.1.1"
 description = ""
 readme = "README.md"
@@ -18,7 +18,7 @@ file = "LICENSE"
 
 [project.urls]
 Homepage = "https://github.com/"
-Repository = "https://github.com/kairos-xx/GitPyPi312.git"
+Repository = "https://github.com/kairos-xx/GitPyPi_3.12.git"
 
 [tool.flake8]
 max-line-length = 79
