@@ -45,4 +45,3 @@
     Attribute "old_obj" is unknown (reportAttributeAccessIssue)
   /home/runner/workspace/main.py:145:50 - error: Cannot access attribute "new_obj" for class "DeepObjectReplacer*"
     Attribute "new_obj" is unknown (reportAttributeAccessIssue)
-23 errors, 0 warnings, 0 informations 
