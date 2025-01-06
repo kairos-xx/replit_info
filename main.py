@@ -30,17 +30,15 @@ class DeepObjectReplacer:
         replacer = DeepObjectReplacer(old_obj=obj_a, new_obj=obj_b, max_workers=4)
     """
 
-    def __new__(cls: type,
-                old_obj: object,
-                new_obj: object,
-                max_workers: int = 4) -> "DeepObjectReplacer":
+    def __init__(self,
+                 old_obj: object,
+                 new_obj: object,
+                 max_workers: int = 4) -> None:
         """Initialize replacer and execute replacement logic.
         Args:
             old_obj: Object to replace throughout runtime.
             new_obj: Object that will replace old_obj.
             max_workers: Maximum number of concurrent worker threads.
-        Returns:
-            DeepObjectReplacer instance with completed replacements.
         Raises:
             TypeError: If old_obj or new_obj is not a Python object.
             ValueError: If max_workers is less than 1.
@@ -51,7 +49,7 @@ class DeepObjectReplacer:
             raise TypeError("new_obj must be a Python object")
         if not isinstance(max_workers, int) or max_workers < 1:
             raise ValueError("max_workers must be a positive integer")
-        self = super().__new__(cls)
+        
         self.old_obj = old_obj
         self.new_obj = new_obj
         self.visited = set()
@@ -61,7 +59,6 @@ class DeepObjectReplacer:
             self._replace_references()
         finally:
             self._executor.shutdown(wait=True)
-        return self
 
     def _replace_references(self) -> None:
         """Replace references in object graph and active stack frames."""
