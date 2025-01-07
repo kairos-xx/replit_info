@@ -5,7 +5,7 @@ Prepare a new Replit Environment
 from contextlib import suppress
 from difflib import get_close_matches
 from importlib import import_module
-from os import environ, getenv
+from os import getenv
 from os.path import abspath, exists
 from pathlib import Path
 from subprocess import CalledProcessError, run
@@ -875,22 +875,6 @@ def run_all() -> None:
             ],
         },
     }
-
-    def decrypt_string(encrypted_hex: str, key: str = "SECRET") -> str:
-        """Decrypt a hex string using XOR cipher with the same key."""
-        # Convert hex back to string
-        encrypted = bytes.fromhex(encrypted_hex).decode()
-
-        # XOR each character with corresponding key character
-        return "".join(
-            chr(ord(c) ^ ord(k))
-            for c, k in zip(
-                encrypted,
-                (key * (len(encrypted) // len(key) + 1))[: len(encrypted)],
-                strict=True,
-            )
-        )
-
     setup = project_info["setup"]
     missing_packages = check_packages(setup["required_packages"])
     print(f"Installing missing packages... {','.join(missing_packages)}")
@@ -932,31 +916,10 @@ def run_all() -> None:
     classifiers = project_info["classifiers"]
     topics = classifiers["topics"]
     development_status = classifiers["development_status"]
-
     response = get(replit_id_url + info.id)
     project_name = response.text.replace('"', "").replace("\n", "")
     replit_owner_id = getenv("REPL_OWNER_ID", "299513")
-
-    if "GITHUB_TOKEN" not in environ:
-        environ["GITHUB_TOKEN"] = decrypt_string(
-            "342c373a30360c3522261a65620402100c02041c732b2d2e1a16"
-            "0f143c3f343d210d1c0506730a142721662135671c1b1d163504"
-            "2a391b132a21721c190c362712352a2b0222150d11732c137604"
-            "1b1716061c00141531273561640e2b"
-        )
-
     github_token = getenv("GITHUB_TOKEN") or ""
-    if "PYPI_TOKEN" not in environ:
-        environ["PYPI_TOKEN"] = decrypt_string(
-            "233c333b681534000a310d382424106733373e26001801063b1f"
-            "041c280d3e103b1e11063b081713311a170034082c653a1f0739"
-            "71180414731f771d61082917751a610c720b2215100e2f213f18"
-            "100f2a1c281e3b1f071f3c1b107570082f303a0917002f0d6100"
-            "370b1111671f1062751b1403281f12123a0b3939761a14102a0a"
-            "141512072a111d371e757364680e0a77080373126a75351c2631"
-            "65220d141d25181a363d2c1a3c720430081c0a230f1704"
-        )
-
     homepage = project_info_urls["Homepage"]
     homepage += f"{user_name}/{project_name}"
     project_info_urls["Homepage"] += f"{user_name}/{project_name}.git"

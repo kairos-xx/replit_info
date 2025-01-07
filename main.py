@@ -1,24 +1,24 @@
 from os import environ
 
-from cloudscraper import create_scraper
 from flask import Flask, jsonify, render_template, request
+from requests import post
 
 app = Flask(__name__)
 
 
 def get_info(replit_id):
-    out = (create_scraper().post(
-            "https://replit.com/graphql",
-            headers={
-                    "Referer": "https://replit.com",
-                    "X-Requested-With": "replit",
+    out = (post(
+        "https://replit.com/graphql",
+        headers={
+            "Referer": "https://replit.com",
+            "X-Requested-With": "replit",
+        },
+        json={
+            "variables": {
+                "id": replit_id
             },
-            json={
-                    "variables": {
-                            "id": replit_id
-                    },
-                    "query":
-                    """
+            "query":
+            """
                     query Repl($id: String) {
                             repl(id: $id) {
                                     ... on Repl {
@@ -134,7 +134,7 @@ def get_info(replit_id):
                             }
                     }
                 """,
-            },
+        },
     ).json())
     return ((out.get("data", out) or out).get("repl", out)) if out else None
 
@@ -142,6 +142,7 @@ def get_info(replit_id):
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/get')
 def repl_info():
@@ -154,7 +155,7 @@ def repl_info():
         info = get_info(replit_id)
         if isinstance(info, dict) and request.args.get('title') is not None:
             info = info.get("title", "")
-        return jsonify(info)
+        return info if isinstance(info, str) else jsonify(info)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

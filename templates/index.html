@@ -1,69 +1,88 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Replit Info API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.6;
-            background-color: #182230;
-            color: white;
-        }
-        pre {
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            color: #182230;
-        }
-        /* unvisited link */
-        a:link {
-          color: white;
-        }
-
-        /* visited link */
-        a:visited {
-          color: #8eb0e1;
-        }
-
-        /* mouse over link */
-        a:hover {
-          color: hotpink;
-        }
-
-        /* selected link */
-        a:active {
-          color: white;
-        }
+      html {
+        --dark: #191b2f;
+        --mid: #454b68;
+        --light: #8f95b5;
+        --pink: #eebaeb;
+        --white: white;
+        --unit: 5px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: calc(var(--unit) * 6) auto;
+        padding: calc(var(--unit) * 3);
+        line-height: calc(var(--unit) * 5);
+        background-color: var(--light);
+        color: var(--dark);
+      }
+      pre {
+        background: var(--dark);
+        padding: calc(var(--unit) * 3);
+        border-radius: var(--unit);
+        color: var(--white);
+      }
+      a {
+        color: var(--light);
+      }
+      a:link {
+        color: var(--light);
+      }
+      a:visited {
+        color: var(--mid);
+      }
+      a:hover {
+        color: var(--pink);
+      }
+      a:active {
+        color: var(--white);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div align="center">
-      <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/icon_raster.png" alt="Tree Interval Logo" width="150"/>
+      <img
+        src="https://github.com/kairos-xx/replit_info/raw/main/assets/icon_raster.png"
+        alt="Tree Interval Logo"
+        width="150"
+      />
       <h1>Replit Info API</h1>
-      <p><em>A simple API to fetch information about Replit repls using GraphQL.</em></p>
+      <p>
+        <em
+          >A simple API to fetch information about Replit repls using
+          GraphQL.</em
+        >
+      </p>
 
       <a href="https://replit.com/@kairos/replitinfo">
-        <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/replit.png" alt="Try it on Replit" width="150"/>
+        <img
+          src="https://github.com/kairos-xx/replit_info/raw/main/assets/replit.png"
+          alt="Try it on Replit"
+          width="150"
+        />
       </a>
-
     </div>
     <h2>Features</h2>
     <ul>
-        <li>Get detailed information about a repl using its ID</li>
-        <li>Optional title-only response</li>
-        <li>Error handling for invalid requests</li>
+      <li>Get detailed information about a repl using its ID</li>
+      <li>Optional title-only response</li>
+      <li>Error handling for invalid requests</li>
     </ul>
 
     <h2>Endpoints</h2>
     <h3>/get</h3>
     <p>Query parameters:</p>
     <ul>
-        <li><code>replit_id</code> (optional): The ID of the repl. If not provided, uses current repl's ID</li>
-        <li><code>title</code> (optional): If present, returns only the repl's title</li>
+      <li>
+        <code>replit_id</code> (optional): The ID of the repl. If not provided,
+        uses current repl's ID
+      </li>
+      <li>
+        <code>title</code> (optional): If present, returns only the repl's title
+      </li>
     </ul>
 
     <h2>Usage Examples</h2>
@@ -72,9 +91,16 @@
 GET /get?replit_id=your-repl-id
 
 # Get only title
-GET /get?replit_id=your-repl-id&title=1</pre>
+GET /get?replit_id=your-repl-id&title</pre
+    >
 
     <h2>Repository</h2>
-    <p>Visit our <a href="https://github.com/kairos-xx/replit_info.git">GitHub Repository</a> for more information.</p>
-</body>
+    <p>
+      Visit our
+      <a href="https://github.com/kairos-xx/replit_info.git"
+        >GitHub Repository</a
+      >
+      for more information.
+    </p>
+  </body>
 </html>

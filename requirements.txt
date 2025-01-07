@@ -11,4 +11,3 @@ pyyaml
 isort
 pyproject-flake8
 zipfile38==0.0.3
-cloudscraper==1.2.71

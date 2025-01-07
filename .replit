@@ -1,5 +1,5 @@
 run = [ "python", "main.py",]
-entrypoint = "main.py"
+entrypoint = "README.md"
 modules = [ "python-3.11:v30-20240222-aba8eb6",]
 hidden = [ ".pythonlibs",]
 disableGuessImports = true
