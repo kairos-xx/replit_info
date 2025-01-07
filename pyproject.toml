@@ -3,7 +3,7 @@ requires = [ "setuptools>=45", "wheel",]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "GitPyPi_3.12"
+name = "replit_info"
 version = "0.1.1"
 description = ""
 readme = "README.md"
@@ -17,8 +17,8 @@ email = "joaoslopes@gmail.com"
 file = "LICENSE"
 
 [project.urls]
-Homepage = "https://github.com/kairos-xx/GitPyPi_3.12.git"
-Repository = "https://github.com/kairos-xx/GitPyPi_3.12.git"
+Homepage = "https://github.com/kairos-xx/replit_info.git"
+Repository = "https://github.com/kairos-xx/replit_info.git"
 
 [tool.flake8]
 max-line-length = 79

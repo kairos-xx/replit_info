@@ -4,7 +4,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 setup(
-    name="GitPyPi_3.12",
+    name="replit_info",
     version="0.1.1",
     packages=find_packages(),
     install_requires=[
@@ -27,7 +27,7 @@ setup(
     description="",
     long_description=Path('README.md').read_text(),
     long_description_content_type="text/markdown",
-    url="https://github.com/kairos-xx/GitPyPi_3.12",
+    url="https://github.com/kairos-xx/replit_info",
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',

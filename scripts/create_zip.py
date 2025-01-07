@@ -28,7 +28,7 @@ def create_zip() -> None:
     excluding specified directories and files.
     """
     # Get current timestamp for filename
-    project_name = "GitPyPi_3.12"
+    project_name = "replit_info"
     zip_path = "zip"
 
     # Ensure zip directory exists
