@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Replit Info API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Replit Info API</h1>
+    <p>A simple API to fetch information about Replit repls using GraphQL.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li>Get detailed information about a repl using its ID</li>
+        <li>Optional title-only response</li>
+        <li>Error handling for invalid requests</li>
+    </ul>
+
+    <h2>Endpoints</h2>
+    <h3>/get</h3>
+    <p>Query parameters:</p>
+    <ul>
+        <li><code>replit_id</code> (optional): The ID of the repl. If not provided, uses current repl's ID</li>
+        <li><code>title</code> (optional): If present, returns only the repl's title</li>
+    </ul>
+
+    <h2>Usage Examples</h2>
+    <pre>
+# Get full repl information
+GET /get?replit_id=your-repl-id
+
+# Get only title
+GET /get?replit_id=your-repl-id&title=1</pre>
+
+    <h2>Repository</h2>
+    <p>Visit our <a href="https://github.com/kairos-xx/replit_info.git">GitHub Repository</a> for more information.</p>
+</body>
+</html>

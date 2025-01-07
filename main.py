@@ -139,6 +139,10 @@ def get_info(replit_id):
     return ((out.get("data", out) or out).get("repl", out)) if out else None
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/get')
 def repl_info():
     replit_id = request.args.get('replit_id') or environ.get('REPL_ID')
