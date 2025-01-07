@@ -1,7 +1,14 @@
 
-# Replit Info API
+<div align="center">
+  <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/icon_raster.png" alt="Tree Interval Logo" width="150"/>
+  <h1>Replit Info API</h1>
+  <p><em>A simple API to fetch information about Replit repls using GraphQL.</em></p>
 
-A simple API to fetch information about Replit repls using GraphQL.
+  <a href="https://replit.com/@kairos/replitinfo">
+    <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/replit.png" alt="Try it on Replit" width="150"/>
+  </a>
+
+</div>
 
 ## Features
 

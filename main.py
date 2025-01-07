@@ -1,7 +1,7 @@
 from os import environ
 
 from cloudscraper import create_scraper
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 

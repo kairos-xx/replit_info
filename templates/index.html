@@ -10,18 +10,47 @@
             margin: 40px auto;
             padding: 0 20px;
             line-height: 1.6;
+            background-color: #182230;
+            color: white;
         }
         pre {
             background: #f5f5f5;
             padding: 15px;
             border-radius: 5px;
+            color: #182230;
+        }
+        /* unvisited link */
+        a:link {
+          color: white;
+        }
+
+        /* visited link */
+        a:visited {
+          color: #8eb0e1;
+        }
+
+        /* mouse over link */
+        a:hover {
+          color: hotpink;
+        }
+
+        /* selected link */
+        a:active {
+          color: white;
         }
     </style>
 </head>
 <body>
-    <h1>Replit Info API</h1>
-    <p>A simple API to fetch information about Replit repls using GraphQL.</p>
+    <div align="center">
+      <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/icon_raster.png" alt="Tree Interval Logo" width="150"/>
+      <h1>Replit Info API</h1>
+      <p><em>A simple API to fetch information about Replit repls using GraphQL.</em></p>
 
+      <a href="https://replit.com/@kairos/replitinfo">
+        <img src="https://github.com/kairos-xx/replit_info/raw/main/assets/replit.png" alt="Try it on Replit" width="150"/>
+      </a>
+
+    </div>
     <h2>Features</h2>
     <ul>
         <li>Get detailed information about a repl using its ID</li>
