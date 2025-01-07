@@ -12,7 +12,7 @@
 ## Quick Start
 ```python
 # Get repl title
-GET /get?replit_id=your-repl-id&title=1
+GET /get?replit_id=your-repl-id&title
 
 # Get full repl info
 GET /get?replit_id=your-repl-id
