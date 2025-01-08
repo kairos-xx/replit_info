@@ -1,4 +1,0 @@
-./main.py:23:80: E501 line too long (82 > 79 characters)
-./main.py:25:80: E501 line too long (80 > 79 characters)
-./main.py:30:80: E501 line too long (82 > 79 characters)
-./main.py:133:13: F841 local variable 'e' is assigned to but never used

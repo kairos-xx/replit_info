@@ -1,6 +1,0 @@
-main.py:23:80: E501 Line too long (82 > 79)
-main.py:25:80: E501 Line too long (80 > 79)
-main.py:30:80: E501 Line too long (82 > 79)
-main.py:133:33: F841 [*] Local variable `e` is assigned to but never used
-Found 4 errors.
-[*] 1 fixable with the `--fix` option.
