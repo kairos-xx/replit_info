@@ -11,6 +11,9 @@
 
 ## Quick Start
 ```python
+# Base URL
+https://replit-info.replit.app
+
 # Get repl title
 GET /get?replit_id=your-repl-id&title
 
